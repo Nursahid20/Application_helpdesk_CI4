@@ -72,7 +72,11 @@
                                 <?php } ?>
                             <td class="cell">
                                 <div class="progress">
-                                    <div class="progress-bar" role="progressbar" style="width: <?= $dataUser[$i]['progress']; ?>%;" aria-valuenow="<?= $dataUser[$i]['progress']; ?>" aria-valuemin="0" aria-valuemax="100"><?= $dataUser[$i]['progress']; ?>%</div>
+                                    <div class="progress-bar" role="progressbar" style="width: <?= $dataUser[$i]['progress']; ?>%;" aria-valuenow="<?= $dataUser[$i]['progress']; ?>" aria-valuemin="0" aria-valuemax="100">
+                                        <?php if (!$dataUser[$i]['progress'] == '') { ?>
+                                            <?= $dataUser[$i]['progress']; ?>%
+                                        <?php } ?>
+                                    </div>
                                 </div>
                             </td>
                             <td class="cell"><?= $dataUser[$i]['penilaian']; ?></td>
@@ -110,12 +114,21 @@
                                 </div>
                                 <input type="hidden" name="id" id="id" value="">
                                 <div class="row mt-2">
-                                    <div class="col-md-4">
+                                    <div class="col-md-6">
                                         <label for="id_it_support" class="form-label">Pilih IT Support</label>
                                         <select class="form-control form-select " id="id_it_support" name="id_it_support">
                                             <option selected></option>
                                             <?php for ($i = 0; $i < $number1; $i++) { ?>
                                                 <option value=" <?= $data_staffit[$i]['id']; ?>"><?= $data_staffit[$i]['nama']; ?></option>
+                                            <?php } ?>
+                                        </select>
+                                    </div>
+                                    <div class="col-sm-6 pb-2">
+                                        <label for="id_prioritas" class="form-label">Level Urgensi</label>
+                                        <select class="form-control form-select" id="id_prioritas" name="id_prioritas" value="<?= old('id_prioritas'); ?>">
+                                            <option selected></option>
+                                            <?php for ($i = 0; $i < $number2; $i++) { ?>
+                                                <option value="<?= $dataPrioritas[$i]['id']; ?>"><?= $dataPrioritas[$i]['prioritas']; ?></option>
                                             <?php } ?>
                                         </select>
                                     </div>
@@ -158,7 +171,7 @@
                                     </div>
                                 </div>
 
-                                <button type="submit" onclick="return confirm('apakah anda yakin sudah mengisi tanggapan?')" class="btn btn-primary" style="float: right;">Simpan Tanggapan</button>
+                                <button type="submit" onclick="return confirm('apakah anda yakin sudah mengisi tanggapan?')" class="btn btn-success" style="float: right;">Simpan Tanggapan</button>
                                 <br>
                             </div>
                         </div>

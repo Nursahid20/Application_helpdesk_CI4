@@ -6,10 +6,8 @@ use App\Models\adminModel;
 use App\Models\karyawanModel;
 use App\Models\UserRequest;
 use App\Models\RequestEvaluation;
-use App\Models\PrioritasModel;
-use App\Models\KategoriModel;
 use App\Models\InformasiModel;
-use App\Models\lampiranModel;
+use App\Models\subRequestModel;
 
 
 class User extends BaseController
@@ -22,10 +20,8 @@ class User extends BaseController
         $this->adminModel = new adminModel();
         $this->karyawanModel = new karyawanModel();
         $this->userRequest = new UserRequest();
-        $this->lampiranModel = new lampiranModel();
+        $this->subRequestModel = new subRequestModel();
         $this->informasiModel = new informasiModel();
-        $this->kategoriModel = new kategoriModel();
-        $this->prioritasModel = new prioritasModel();
         $this->requestEvaluation = new requestEvaluation();
     }
 
@@ -237,9 +233,9 @@ class User extends BaseController
         $dataUser1 = $this->karyawanModel->getIdKaryawan($nik);
         $dataUser2 = $this->userRequest->getAllRequestById($dataUser1[0]['id']);
         $count = count($dataUser2) + 1;
-        $dataPrioritas = $this->prioritasModel->getAllPrioritas();
-        $dataLampiran = $this->lampiranModel->getAllLampiran();
-        $dataKategori = $this->kategoriModel->getAllKategori();
+        $dataPrioritas = $this->subRequestModel->getPrioritas();
+        $dataLampiran = $this->subRequestModel->getLampiran();
+        $dataKategori = $this->subRequestModel->getKategori();
         $number1 = count($dataKategori);
         $number2 = count($dataLampiran);
         $number3 = count($dataPrioritas);
@@ -271,12 +267,6 @@ class User extends BaseController
                     'max_size' => 'Gambar Terlalu besar',
                     'is_image' => 'file bukan gambar',
                     'mime_in' => 'file bukan gambar'
-                ]
-            ],
-            'id_prioritas' => [
-                'rules' => 'required[permintaan.id_prioritas]',
-                'errors' => [
-                    'required' => 'level urgensi harus diisi.'
                 ]
             ],
             'id_kategori' => [
@@ -329,11 +319,11 @@ class User extends BaseController
                 'id_karyawan' => $this->request->getVar('id_karyawan'),
                 'id_kategori' => $this->request->getVar('id_kategori'),
                 'id_departemen' => $this->request->getVar('id_departemen'),
-                'id_prioritas' => $this->request->getVar('id_prioritas'),
                 'id_lampiran' => $this->request->getVar('id_lampiran'),
                 'id_it_support' => 1,
                 'id_analisis' => 4,
-                'id_status' => 4
+                'id_status' => 4,
+                'id_prioritas' => 4
             ]
         );
 
@@ -388,12 +378,6 @@ class User extends BaseController
                     'mime_in' => 'file bukan gambar'
                 ]
             ],
-            'id_prioritas' => [
-                'rules' => 'required[permintaan.id_prioritas]',
-                'errors' => [
-                    'required' => '{field} harus diisi.'
-                ]
-            ],
             'id_kategori' => [
                 'rules' => 'required[permintaan.id_kategori]',
                 'errors' => [
@@ -435,7 +419,6 @@ class User extends BaseController
                 'img_lampiran' => $namaFoto,
                 'benefit' => $this->request->getVar('benefit'),
                 'id_kategori' => $this->request->getVar('id_kategori'),
-                'id_prioritas' => $this->request->getVar('id_prioritas'),
                 'detail_masalah' => $this->request->getVar('detail_masalah'),
                 'id_lampiran' => $this->request->getVar('id_lampiran')
             ]

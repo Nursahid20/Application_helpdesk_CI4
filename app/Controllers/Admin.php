@@ -7,11 +7,8 @@ use App\Models\karyawanModel;
 use App\Models\jabatanModel;
 use App\Models\itSupportModel;
 use App\Models\departemenModel;
-use App\Models\prioritasModel;
+use App\Models\subRequestModel;
 use App\Models\informasiModel;
-use App\Models\kategoriModel;
-use App\Models\lampiranModel;
-use App\Models\statusModel;
 use App\Models\UserRequest;
 
 class Admin extends BaseController
@@ -23,11 +20,8 @@ class Admin extends BaseController
         $this->adminModel = new adminModel();
         $this->karyawanModel = new karyawanModel();
         $this->itSupportModel = new itSupportModel();
-        $this->statusModel = new statusModel();
-        $this->lampiranModel = new lampiranModel();
+        $this->subRequestModel = new subRequestModel();
         $this->informasiModel = new informasiModel();
-        $this->kategoriModel = new kategoriModel();
-        $this->prioritasModel = new prioritasModel();
         $this->departemenModel = new departemenModel();
         $this->jabatanModel = new jabatanModel();
         $this->userRequest = new UserRequest();
@@ -1069,17 +1063,20 @@ class Admin extends BaseController
 
         $dataUser = $this->userRequest->getUserRequestForAdmin();
         $staffit = $this->itSupportModel->getAllITSupport();
+        $dataPrioritas = $this->subRequestModel->getPrioritas();
         $number = count($dataUser);
         $number1 = count($staffit);
+        $number2 = count($dataPrioritas);
 
         $data = [
             'levelUser' => $levelUser['level_user'],
             'name' => $levelUser['nama'],
-
+            "dataPrioritas" => $dataPrioritas,
             'dataUser' => $dataUser,
             'data_staffit' => $staffit,
             'number' => $number,
-            'number1' => $number1
+            'number1' => $number1,
+            'number2' => $number2
         ];
         return view('admin/userRequest', $data);
     }
@@ -1090,6 +1087,7 @@ class Admin extends BaseController
             [
                 'id' => $id,
                 'id_it_support' => $this->request->getVar('id_it_support'),
+                'id_prioritas' => $this->request->getVar('id_prioritas'),
                 'id_analisis' => 2,
                 'start_date' => $this->request->getVar('start_date'),
                 'till_date' => $this->request->getVar('till_date')
@@ -1322,7 +1320,7 @@ class Admin extends BaseController
         $nik = $session->get('nik');
         $levelUser = $this->adminModel->getNIK($nik);
 
-        $dataPrioritas = $this->prioritasModel->getAllPrioritas();
+        $dataPrioritas = $this->subRequestModel->getPrioritas();
 
         $data = [
             'levelUser' => $levelUser['level_user'],
@@ -1334,8 +1332,11 @@ class Admin extends BaseController
 
     public function savePrioritas()
     {
-        $this->prioritasModel->save(
+        $dataPrioritas = $this->subRequestModel->getPrioritas();
+        $id = count($dataPrioritas) + 1;
+        $this->subRequestModel->save(
             [
+                'id' => $id,
                 'prioritas' => $this->request->getVar('prioritas')
             ]
         );
@@ -1346,7 +1347,7 @@ class Admin extends BaseController
 
     public function updatePrioritas($id)
     {
-        $this->prioritasModel->save(
+        $this->subRequestModel->save(
             [
                 'id' => $id,
                 'prioritas' => $this->request->getVar('prioritas')
@@ -1363,7 +1364,7 @@ class Admin extends BaseController
         $nik = $session->get('nik');
         $levelUser = $this->adminModel->getNIK($nik);
 
-        $dataKategori = $this->kategoriModel->getAllKategori();
+        $dataKategori = $this->subRequestModel->getKategori();
 
         $data = [
             'levelUser' => $levelUser['level_user'],
@@ -1375,8 +1376,11 @@ class Admin extends BaseController
 
     public function saveKategori()
     {
-        $this->kategoriModel->save(
+        $dataKategori = $this->subRequestModel->getKategori();
+        $id = count($dataKategori) + 1;
+        $this->subRequestModel->save(
             [
+                'id' => $id,
                 'kategori' => $this->request->getVar('kategori')
             ]
         );
@@ -1387,7 +1391,7 @@ class Admin extends BaseController
 
     public function updateKategori($id)
     {
-        $this->kategoriModel->save(
+        $this->subRequestModel->save(
             [
                 'id' => $id,
                 'kategori' => $this->request->getVar('kategori')
@@ -1404,7 +1408,7 @@ class Admin extends BaseController
         $nik = $session->get('nik');
         $levelUser = $this->adminModel->getNIK($nik);
 
-        $dataLampiran = $this->lampiranModel->getAllLampiran();
+        $dataLampiran = $this->subRequestModel->getLampiran();
 
         $data = [
             'levelUser' => $levelUser['level_user'],
@@ -1416,8 +1420,11 @@ class Admin extends BaseController
 
     public function saveLampiran()
     {
-        $this->lampiranModel->save(
+        $dataLampiran = $this->subRequestModel->getLampiran();
+        $id = count($dataLampiran) + 1;
+        $this->subRequestModel->save(
             [
+                'id' => $id,
                 'lampiran' => $this->request->getVar('lampiran')
             ]
         );
@@ -1428,7 +1435,7 @@ class Admin extends BaseController
 
     public function updateLampiran($id)
     {
-        $this->lampiranModel->save(
+        $this->subRequestModel->save(
             [
                 'id' => $id,
                 'lampiran' => $this->request->getVar('lampiran')
@@ -1445,7 +1452,7 @@ class Admin extends BaseController
         $nik = $session->get('nik');
         $levelUser = $this->adminModel->getNIK($nik);
 
-        $dataStatus = $this->statusModel->getAllstatus();
+        $dataStatus = $this->subRequestModel->getStatus();
 
         $data = [
             'levelUser' => $levelUser['level_user'],
@@ -1457,8 +1464,11 @@ class Admin extends BaseController
 
     public function saveStatus()
     {
-        $this->statusModel->save(
+        $dataStatus = $this->subRequestModel->getStatus();
+        $id = count($dataStatus) + 1;
+        $this->subRequestModel->save(
             [
+                'id' => $id,
                 'status' => $this->request->getVar('status')
             ]
         );
@@ -1469,7 +1479,7 @@ class Admin extends BaseController
 
     public function updateStatus($id)
     {
-        $this->statusModel->save(
+        $this->subRequestModel->save(
             [
                 'id' => $id,
                 'status' => $this->request->getVar('status')
@@ -1539,7 +1549,12 @@ class Admin extends BaseController
 
     public function prioritas_delete($id)
     {
-        $this->prioritasModel->delete($id);
+        $this->subRequestModel->save(
+            [
+                'id' => $id,
+                'prioritas' => ''
+            ]
+        );
 
         session()->setFlashdata('pesan', 'Data berhasil di hapus');
 
@@ -1548,7 +1563,12 @@ class Admin extends BaseController
 
     public function kategori_delete($id)
     {
-        $this->kategoriModel->delete($id);
+        $this->subRequestModel->save(
+            [
+                'id' => $id,
+                'kategori' => ''
+            ]
+        );
 
         session()->setFlashdata('pesan', 'Data berhasil di hapus');
 
@@ -1557,7 +1577,12 @@ class Admin extends BaseController
 
     public function lampiran_delete($id)
     {
-        $this->lampiranModel->delete($id);
+        $this->subRequestModel->save(
+            [
+                'id' => $id,
+                'lampiran' => ''
+            ]
+        );
 
         session()->setFlashdata('pesan', 'Data berhasil di hapus');
 
@@ -1566,7 +1591,12 @@ class Admin extends BaseController
 
     public function status_delete($id)
     {
-        $this->statusModel->delete($id);
+        $this->subRequestModel->save(
+            [
+                'id' => $id,
+                'status' => ''
+            ]
+        );
 
         session()->setFlashdata('pesan', 'Data berhasil di hapus');
 

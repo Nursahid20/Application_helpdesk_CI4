@@ -20,44 +20,28 @@
                 <input type="hidden" name="old_image" id="old_image" value="<?= $request['img_lampiran']; ?>">
 
                 <div class="row">
-                    <div class="col-sm-4 pb-2">
+                    <div class="col-sm-6 pb-2">
                         <label for="kode_permintaan" class="form-label">Kode Permintaan</label>
                         <input type="text" class="form-control" id="kode_permintaan" readonly name="kode_permintaan" value="<?= $request['kode_permintaan']; ?>">
                         <div class="invalid-feedback">
                             <?= $validation->getError('kode_permintaan'); ?>
                         </div>
                     </div>
-                    <div class="col-sm-4 pb-2">
+                    <div class="col-sm-6 pb-2">
                         <label for="nama" class="form-label">Nama Pemohon</label>
                         <input type="text" class="form-control" id="nama" readonly name="nama" value="<?= $request['nama']; ?>">
                         <div class="invalid-feedback">
                             <?= $validation->getError('nama'); ?>
                         </div>
                     </div>
-                    <div class="col-sm-4 pb-2">
+                    <div class="col-sm-6 pb-2">
                         <label for="nama_departemen" class="form-label">Departemen</label>
                         <input type="text" class="form-control" readonly id="nama_departemen" name="nama_departemen" value="<?= $request['nama_departemen']; ?>">
                         <div class="invalid-feedback">
                             <?= $validation->getError('nama_departemen'); ?>
                         </div>
                     </div>
-                    <div class="col-sm-4 pb-2">
-                        <label for="id_prioritas" class="form-label">Level Urgensi</label>
-                        <select class="form-control form-select <?= ($validation->hasError('id_prioritas')) ? 'is-invalid' : ''; ?>" id="id_prioritas" name="id_prioritas" value="">
-                            <option selected disabled>Pilih Level Urgensi</option>
-                            <?php foreach ($dataPrioritas as $j) : ?>
-                                <?php if ($request['id_prioritas'] == $j->id) : ?>
-                                    <option selected value="<?= $j->id; ?>"><?= $j->prioritas; ?></option>
-                                <?php else : ?>
-                                    <option value="<?= $j->id; ?>"><?= $j->prioritas; ?></option>
-                                <?php endif; ?>
-                            <?php endforeach; ?>
-                        </select>
-                        <div class="invalid-feedback">
-                            <?= $validation->getError('id_prioritas'); ?>
-                        </div>
-                    </div>
-                    <div class="col-sm-4 pb-2">
+                    <div class="col-sm-6 pb-2">
                         <label for="id_kategori" class="form-label">Jenis Permintaan</label>
                         <select class="form-control form-select <?= ($validation->hasError('id_kategori')) ? 'is-invalid' : ''; ?>" id="id_kategori" name="id_kategori" value="">
                             <option selected disabled>Pilih Jenis Permintaan</option>
@@ -120,7 +104,7 @@
                 </div>
 
                 <br>
-                <button type="submit" class="btn btn-primary">Simpan</button>
+                <button type="submit" class="btn btn-success">Simpan Data</button>
             </form>
         </div>
     </div>

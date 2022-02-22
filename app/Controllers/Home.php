@@ -7,11 +7,8 @@ use App\Models\karyawanModel;
 use App\Models\jabatanModel;
 use App\Models\itSupportModel;
 use App\Models\departemenModel;
-use App\Models\prioritasModel;
 use App\Models\informasiModel;
-use App\Models\kategoriModel;
-use App\Models\lampiranModel;
-use App\Models\statusModel;
+use App\Models\subRequestModel;
 use App\Models\UserRequest;
 
 class Home extends BaseController
@@ -23,11 +20,8 @@ class Home extends BaseController
         $this->adminModel = new adminModel();
         $this->karyawanModel = new karyawanModel();
         $this->itSupportModel = new itSupportModel();
-        $this->statusModel = new statusModel();
-        $this->lampiranModel = new lampiranModel();
+        $this->subRequestModel = new subRequestModel();
         $this->informasiModel = new informasiModel();
-        $this->kategoriModel = new kategoriModel();
-        $this->prioritasModel = new prioritasModel();
         $this->departemenModel = new departemenModel();
         $this->jabatanModel = new jabatanModel();
         $this->userRequest = new UserRequest();

@@ -60,11 +60,13 @@
                                     <a class="btn btn-outline-success">Diterima</a>
                                 <?php } ?>
                             </td>
-                            <td class="cell">
-                                <div class="progress">
-                                    <div class="progress-bar" role="progressbar" style="width: <?= $dataUser[$i]['progress']; ?>%;" aria-valuenow="<?= $dataUser[$i]['progress']; ?>" aria-valuemin="0" aria-valuemax="100"><?= $dataUser[$i]['progress']; ?></div>
+                            <div class="progress">
+                                <div class="progress-bar" role="progressbar" style="width: <?= $dataUser[$i]['progress']; ?>%;" aria-valuenow="<?= $dataUser[$i]['progress']; ?>" aria-valuemin="0" aria-valuemax="100">
+                                    <?php if (!$dataUser[$i]['progress'] == '') { ?>
+                                        <?= $dataUser[$i]['progress']; ?>%
+                                    <?php } ?>
                                 </div>
-                            </td>
+                            </div>
                             <td class="cell">
                                 <?php if ($dataUser[$i]['penilaian']) { ?>
                                     <a class="btn btn-outline-success">Feedback Terkirim</a>
